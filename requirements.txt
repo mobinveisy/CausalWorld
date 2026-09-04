@@ -1,0 +1,10 @@
+torch>=2.2
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4
+pandas>=2.2
+matplotlib>=3.8
+requests>=2.31
+huggingface-hub>=0.24
+tqdm>=4.66
+tabulate>=0.9

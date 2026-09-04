@@ -1,0 +1,3 @@
+trial_id,state_path,mass_b,split,pair_id,query_ok
+m150_v1_p1_r1,data/processed/m150_v1_p1_r1.npy,150,train,v1_p1,1
+m200_v1_p1_r1,data/processed/m200_v1_p1_r1.npy,200,train,v1_p1,1

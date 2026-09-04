@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use CausalWorld, please cite the associated paper and this software release."
+title: "CausalWorld: Causally Editable Latent Physics from Passive Observations"
+type: software
+version: "0.9.0-rc1"
+date-released: "2026-09-05"
+authors:
+  - name: "CausalWorld Contributors"
+license: MIT
+repository-code: "https://github.com/YOUR_GITHUB_USER/CausalWorld"
+abstract: >
+  Research code for learning a latent physical representation from passive observations
+  and testing whether counterfactual latent replacement produces the corresponding
+  physical dynamics.
+keywords:
+  - world models
+  - physical reasoning
+  - counterfactual learning
+  - causal representation learning
+  - deep learning
