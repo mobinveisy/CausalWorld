@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050814" />
+    <meta name="description" content="CausalWorld — learning causally editable latent physics from passive observations for counterfactual physical reasoning." />
+    <meta property="og:title" content="CausalWorld" />
+    <meta property="og:description" content="Learning causally editable latent physics from passive observations." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mobinveisy.github.io/CausalWorld/" />
+    <meta property="og:image" content="https://mobinveisy.github.io/CausalWorld/og-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>CausalWorld — Causally Editable Latent Physics</title>
+  </head>
+  <body>
+    <canvas id="webgl" aria-hidden="true"></canvas>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <header class="nav-shell">
+      <a class="brand" href="#top" aria-label="CausalWorld home">
+        <span class="brand-mark" aria-hidden="true"><i></i><b></b></span>
+        <span>CausalWorld</span>
+      </a>
+      <nav>
+        <a href="#research">Research</a>
+        <a href="#method">Method</a>
+        <a href="#benchmarks">Benchmarks</a>
+        <a href="#resources">Resources</a>
+      </nav>
+      <a class="nav-github" href="https://github.com/mobinveisy/CausalWorld" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span></span> WORLD MODELS · CAUSAL REPRESENTATIONS · PHYSICAL REASONING</div>
+          <h1>Teaching AI to <em>edit physics</em>,<br />not just predict pixels.</h1>
+          <p class="hero-lede">
+            CausalWorld studies whether a model can infer hidden physical properties from passive observations,
+            encode them as <strong>z<sub>physics</sub></strong>, and produce the correct counterfactual future when only that latent physics is changed.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="https://colab.research.google.com/github/mobinveisy/CausalWorld/blob/main/notebooks/01_CausalWorld_Quick_Demo.ipynb" target="_blank" rel="noreferrer">
+              <span>Run the demo in Colab</span><b>↗</b>
+            </a>
+            <a class="btn secondary" href="https://github.com/mobinveisy/CausalWorld" target="_blank" rel="noreferrer">
+              <span>Explore source code</span><b>→</b>
+            </a>
+          </div>
+          <div class="hero-meta">
+            <div><span>Core metric</span><strong>CEE ↓</strong></div>
+            <div><span>Controlled benchmark</span><strong>Physion++</strong></div>
+            <div><span>Real-world validation</span><strong>GAUGE</strong></div>
+          </div>
+        </div>
+
+        <aside class="physics-console reveal" aria-label="Interactive physics intervention demo">
+          <div class="console-top">
+            <div><span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span></div>
+            <small>LIVE LATENT INTERVENTION</small>
+            <span class="status"><i></i> WebGL active</span>
+          </div>
+          <div class="console-body">
+            <div class="latent-line">
+              <span>latent state</span>
+              <code id="latentValue">z = [0.41, −0.08, 0.77, …]</code>
+            </div>
+            <h2>Same scene.<br /><em>Different physics.</em></h2>
+            <p>Switch the hidden physical state while keeping the initial scene fixed. The 3D collision above responds in real time.</p>
+            <div class="mode-switch" role="group" aria-label="Physics mode">
+              <button class="mode active" data-mode="factual"><span></span>Factual</button>
+              <button class="mode" data-mode="counterfactual"><span></span>Counterfactual</button>
+            </div>
+            <div class="metric-row">
+              <div><span>target mass</span><strong id="massValue">1.00×</strong></div>
+              <div><span>post-impact v</span><strong id="velocityValue">0.91</strong></div>
+              <div><span>latent edit</span><strong id="editValue">OFF</strong></div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="research" class="statement section-shell reveal">
+        <div class="statement-index">01 / RESEARCH QUESTION</div>
+        <blockquote>
+          “Does accurate future prediction imply that a model has learned a <em>causally editable</em> representation of physics?”
+        </blockquote>
+        <p>We test a stronger criterion: intervention consistency. The model must change its predicted future for the right physical reason.</p>
+      </section>
+
+      <section id="method" class="section-shell method-section">
+        <div class="section-heading reveal">
+          <span>02 / METHOD</span>
+          <h2>Observation → latent physics → intervention.</h2>
+          <p>One compact representation is forced to explain multiple contexts and survive counterfactual swaps.</p>
+        </div>
+
+        <div class="method-grid">
+          <article class="method-card reveal" data-step="1">
+            <div class="step-no">01</div>
+            <div class="icon-orbit"><i></i><b></b></div>
+            <h3>Observe</h3>
+            <p>Receive passive trajectories without the hidden mass value as an input.</p>
+          </article>
+          <article class="method-card reveal" data-step="2">
+            <div class="step-no">02</div>
+            <div class="icon-core"><i></i></div>
+            <h3>Infer</h3>
+            <p>Encode recurring dynamics into a low-dimensional latent physical state, z<sub>physics</sub>.</p>
+          </article>
+          <article class="method-card reveal" data-step="3">
+            <div class="step-no">03</div>
+            <div class="icon-swap"><i></i><b></b></div>
+            <h3>Intervene</h3>
+            <p>Hold the initial scene constant and replace only the inferred physical latent.</p>
+          </article>
+          <article class="method-card reveal" data-step="4">
+            <div class="step-no">04</div>
+            <div class="icon-wave"><i></i></div>
+            <h3>Measure</h3>
+            <p>Evaluate whether the change in predicted dynamics matches the true counterfactual effect.</p>
+          </article>
+        </div>
+
+        <div class="equation-panel reveal">
+          <div>
+            <span class="equation-label">CAUSAL EFFECT OBJECTIVE</span>
+            <div class="equation">L<sub>effect</sub> = ‖(τ̂<sub>cf</sub> − τ̂) − (τ<sub>cf</sub> − τ)‖²</div>
+          </div>
+          <p>Instead of rewarding two independently plausible rollouts, this term directly rewards the <strong>change caused by the intervention</strong>.</p>
+        </div>
+      </section>
+
+      <section class="section-shell metrics-section">
+        <div class="section-heading reveal">
+          <span>03 / EVALUATION</span>
+          <h2>Prediction is not enough.</h2>
+          <p>CausalWorld reports ordinary trajectory quality and intervention-specific diagnostics.</p>
+        </div>
+        <div class="metric-cards">
+          <article class="metric-card reveal"><span>Trajectory</span><strong>ADE</strong><p>Average displacement error across the rollout.</p></article>
+          <article class="metric-card reveal"><span>Impact</span><strong>PCVE</strong><p>Post-collision velocity error after physical interaction.</p></article>
+          <article class="metric-card featured reveal"><span>Counterfactual</span><strong>CEE</strong><p>Counterfactual Effect Error — our main intervention metric.</p><i>PRIMARY</i></article>
+          <article class="metric-card reveal"><span>Representation</span><strong>R²</strong><p>Linear-probe diagnostics for latent physical structure.</p></article>
+        </div>
+      </section>
+
+      <section id="benchmarks" class="section-shell benchmark-section">
+        <div class="section-heading reveal">
+          <span>04 / PUBLIC DATA</span>
+          <h2>No private demo-only dataset.</h2>
+          <p>The project is designed around public benchmarks so the claims can be independently reproduced.</p>
+        </div>
+        <div class="benchmark-grid">
+          <article class="benchmark-card reveal">
+            <div class="bench-kicker">CONTROLLED HIDDEN PHYSICS</div>
+            <h3>Physion++</h3>
+            <p>Used for latent physical properties and matched counterfactual conditions, including mass and other hidden properties.</p>
+            <div class="chips"><span>Mass</span><span>Friction</span><span>Elasticity</span><span>Counterfactual pairs</span></div>
+          </article>
+          <article class="benchmark-card reveal">
+            <div class="bench-kicker">REAL-WORLD VALIDATION</div>
+            <h3>GAUGE</h3>
+            <p>Used as an independent real-world source with controlled motion capture and calibrated physical metadata.</p>
+            <div class="chips"><span>Motion capture</span><span>Rigid bodies</span><span>Real measurements</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="resources" class="section-shell resources-section">
+        <div class="resource-panel reveal">
+          <div>
+            <span class="resource-kicker">OPEN RESEARCH TOOLING</span>
+            <h2>Inspect it. Run it. Reproduce it.</h2>
+            <p>The repository includes training code, baselines, ablations, multi-seed evaluation, dataset setup scripts, Colab notebooks, citation metadata, and release documentation.</p>
+          </div>
+          <div class="resource-links">
+            <a href="https://colab.research.google.com/github/mobinveisy/CausalWorld/blob/main/notebooks/01_CausalWorld_Quick_Demo.ipynb" target="_blank" rel="noreferrer"><span>Quick demo</span><b>Google Colab ↗</b></a>
+            <a href="https://colab.research.google.com/github/mobinveisy/CausalWorld/blob/main/notebooks/02_Reproduce_CausalWorld.ipynb" target="_blank" rel="noreferrer"><span>Reproduce experiments</span><b>Full notebook ↗</b></a>
+            <a href="https://github.com/mobinveisy/CausalWorld" target="_blank" rel="noreferrer"><span>Source & docs</span><b>GitHub repository ↗</b></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell final-cta reveal">
+        <div class="final-orb" aria-hidden="true"></div>
+        <span>CAUSALWORLD / 2026</span>
+        <h2>Can AI learn the laws behind what it sees?</h2>
+        <p>We are testing whether world models can move from correlation toward manipulable physical representations.</p>
+        <a class="btn primary large" href="https://github.com/mobinveisy/CausalWorld" target="_blank" rel="noreferrer">View CausalWorld on GitHub <b>↗</b></a>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>CausalWorld</strong><span>Research project by Mobin Veisy</span></div>
+      <p>© 2026 Mobin Veisy. All rights reserved.</p>
+      <div class="footer-links"><a href="https://github.com/mobinveisy/CausalWorld" target="_blank" rel="noreferrer">GitHub</a><a href="https://colab.research.google.com/github/mobinveisy/CausalWorld/blob/main/notebooks/01_CausalWorld_Quick_Demo.ipynb" target="_blank" rel="noreferrer">Colab</a></div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

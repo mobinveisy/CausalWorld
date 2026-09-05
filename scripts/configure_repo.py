@@ -20,8 +20,8 @@ def main():
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        new = text.replace("YOUR_GITHUB_USER/CausalWorld", full)
-        new = new.replace("YOUR_GITHUB_USER", args.github_user)
+        new = text.replace("mobinveisy/CausalWorld", full)
+        new = new.replace("mobinveisy", args.github_user)
         if new != text:
             path.write_text(new, encoding="utf-8")
             changed += 1

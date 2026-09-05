@@ -1,56 +1,88 @@
-# CausalWorld — نسخه Release Candidate قبل از مقاله
+# CausalWorld — نسخه نهایی GitHub + Three.js
 
-پروژه بررسی می‌کند آیا مدل می‌تواند از چند مشاهده‌ی passive یک نمایش پنهان از physics
-یاد بگیرد و سپس با تغییر فقط همان نمایش، counterfactual درست را پیش‌بینی کند.
+پروژه بررسی می‌کند آیا یک مدل می‌تواند از مشاهده‌های passive یک نمایش پنهان از فیزیک یاد بگیرد و بعد با تغییر فقط همان `z_physics`، نتیجه counterfactual درست را بسازد.
 
-```text
-Passive observations
-      ↓
-Physics Encoder
-      ↓
-z_physics
-      ↓
-Dynamics Decoder
-      ↓
-Future
-```
-
-در counterfactual، initial state ثابت می‌ماند و فقط `z_physics` عوض می‌شود.
-
-## دیتاست‌ها
-
-- **Physion++**: دیتاست اصلی hidden-property و pairهای matched `copy0/copy1`
-- **GAUGE**: اعتبارسنجی real-world با motion-capture و metadata فیزیکی کالیبره
-
-پس برای مقاله نیازی به فیلم‌برداری شخصی نداریم.
-
-## تست
+## اجرای پژوهش
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
 pip install -e .
 python run_tests.py
+```
+
+Smoke test:
+
+```bash
 python run_suite.py --mode smoke --seeds 11 --output results_smoke
 ```
 
-## اجرای نهایی synthetic
+## لندینگ سه‌بعدی واقعی
+
+لندینگ داخل `web/` با:
+
+- Three.js
+- WebGL
+- Unreal Bloom post-processing
+- هسته سه‌بعدی `z_physics`
+- شبیه‌سازی collision
+- سوییچ Factual / Counterfactual
+- particle field
+- scroll/pointer camera motion
+- GitHub Pages deployment
+
+ساخته شده.
+
+برای تست روی مک:
 
 ```bash
-python run_suite.py   --mode full   --seeds 11 22 33 44 55   --output results_full
+cd web
+npm install
+npm run dev
 ```
 
-## Colab آماده
+برای build:
+
+```bash
+npm run build
+```
+
+## GitHub Pages
+
+بعد از Push:
 
 ```text
-notebooks/01_CausalWorld_Quick_Demo.ipynb
-notebooks/02_Reproduce_CausalWorld.ipynb
-notebooks/03_Public_Data_Setup.ipynb
+Settings → Pages → Source: GitHub Actions
 ```
 
-بعد از ساخت GitHub:
+سایت:
 
-```bash
-python scripts/configure_repo.py   --github-user USERNAME   --repo CausalWorld
+```text
+https://mobinveisy.github.io/CausalWorld/
 ```
 
-این نسخه `0.9.0-rc1` است. از نظر ساختار repo، Colab، citation و reproducibility آماده‌ی
-انتشار است. مرحله بعد اجرای کامل آزمایش‌های public-data و سپس نوشتن مقاله با نتایج واقعی است.
+راهنمای کامل:
+
+```text
+docs/GITHUB_PAGES_THREEJS_FA.md
+```
+
+## Colab
+
+Demo:
+
+```text
+https://colab.research.google.com/github/mobinveisy/CausalWorld/blob/main/notebooks/01_CausalWorld_Quick_Demo.ipynb
+```
+
+Reproduce:
+
+```text
+https://colab.research.google.com/github/mobinveisy/CausalWorld/blob/main/notebooks/02_Reproduce_CausalWorld.ipynb
+```
+
+## Copyright
+
+**Mobin Veisy**
+
+© 2026 Mobin Veisy. All rights reserved for the project website and authored project materials.

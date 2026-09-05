@@ -1,7 +1,7 @@
 # Release checklist
 
 ## Before GitHub publication
-- [ ] Replace `YOUR_GITHUB_USER` with your GitHub username.
+- [x] GitHub username configured as `mobinveisy`.
 - [ ] Run `python run_tests.py`.
 - [ ] Run `python scripts/verify_release.py`.
 - [ ] Confirm no datasets or large checkpoints are committed.
